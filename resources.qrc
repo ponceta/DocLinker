@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/DocumentLinker" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>
