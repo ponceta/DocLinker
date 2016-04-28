@@ -22,6 +22,7 @@
 """
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
 from PyQt4.QtGui import QAction, QIcon
+from identify_feature import IdentifyFeature
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
@@ -161,11 +162,18 @@ class DocumentLinker:
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
         icon_path = ':/plugins/DocumentLinker/icon.png'
-        self.add_action(
-            icon_path,
-            text=self.tr(u'Doc Linker'),
-            callback=self.run,
-            parent=self.iface.mainWindow())
+
+        self.identify_tool = IdentifyFeature(self.iface.mapCanvas())
+        print self.identify_tool
+
+        action = self.add_action(
+                    icon_path,
+                    text=self.tr(u'Doc Linker'),
+                    callback=self.run,
+                    parent=self.iface.mainWindow())
+
+        action.setCheckable(True)
+        self.identify_tool.setAction(action)
 
 
     def unload(self):
@@ -175,6 +183,7 @@ class DocumentLinker:
                 self.tr(u'&Document Linker'),
                 action)
             self.iface.removeToolBarIcon(action)
+        # self.iface.mapCanvas().unsetMapTool(self.identify_tool)
         # remove the toolbar
         del self.toolbar
 
@@ -182,11 +191,13 @@ class DocumentLinker:
     def run(self):
         """Run method that performs all the real work"""
         # show the dialog
-        self.dlg.show()
+        # self.dlg.show()
         # Run the dialog event loop
-        result = self.dlg.exec_()
+        # result = self.dlg.exec_()
         # See if OK was pressed
-        if result:
+        # if result:
             # Do something useful here - delete the line containing pass and
             # substitute with your code.
-            pass
+            # pass
+        self.iface.mapCanvas().setMapTool(self.identify_tool)
+
