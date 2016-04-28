@@ -10,6 +10,9 @@
     <height>554</height>
    </rect>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>Document Linker</string>
   </property>
@@ -98,31 +101,24 @@
     </rect>
    </property>
   </widget>
-  <widget class="QWidget" name="widget" native="true">
+  <widget class="QLabel" name="dropzoneLabel">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>190</y>
-     <width>391</width>
-     <height>281</height>
+     <x>90</x>
+     <y>200</y>
+     <width>311</width>
+     <height>251</height>
     </rect>
    </property>
-   <widget class="QLabel" name="dropzoneLabel">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>110</y>
-      <width>71</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="acceptDrops">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string>DRAGZONE</string>
-    </property>
-   </widget>
+   <property name="acceptDrops">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>DRAGZONE</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
  </widget>
  <resources/>

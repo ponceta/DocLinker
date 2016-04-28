@@ -44,8 +44,16 @@ class DocumentLinkerDialog(QtGui.QDialog, FORM_CLASS):
 
     def dragEnterEvent(self, event):
         #Tester le mimetype du fichier draguer
+        event.acceptProposedAction()
+        QgsMessageLog.logMessage("On est dans dragEnterEvent", 'DocLinker')
         pass
 
     def dropEvent(self, event):
         QgsMessageLog.logMessage("On est dans dropEvent", 'DocLinker')
+        if event.mimeData().hasUrls():
+            image_url = event.mimeData().urls()[0]
+            QgsMessageLog.logMessage("URL du fichier: {}".format(image_url), 'DocLinker')
+            myImage = QtGui.QPixmap()
+            myImage.load(image_url.path())
+            self.dropzoneLabel.setPixmap(myImage)
         pass
