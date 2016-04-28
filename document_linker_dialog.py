@@ -24,6 +24,8 @@
 import os
 
 from PyQt4 import QtGui, uic
+from qgis.core import QgsMessageLog
+
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'document_linker_dialog_base.ui'))
@@ -39,3 +41,11 @@ class DocumentLinkerDialog(QtGui.QDialog, FORM_CLASS):
         # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
+
+    def dragEnterEvent(self, event):
+        #Tester le mimetype du fichier draguer
+        pass
+
+    def dropEvent(self, event):
+        QgsMessageLog.logMessage("On est dans dropEvent", 'DocLinker')
+        pass

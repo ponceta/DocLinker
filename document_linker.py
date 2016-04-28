@@ -164,7 +164,7 @@ class DocumentLinker:
         icon_path = ':/plugins/DocumentLinker/icon.png'
 
         self.identify_tool = IdentifyFeature(self.iface.mapCanvas())
-        print self.identify_tool
+        #print self.identify_tool
 
         action = self.add_action(
                     icon_path,
@@ -200,4 +200,5 @@ class DocumentLinker:
             # substitute with your code.
             # pass
         self.iface.mapCanvas().setMapTool(self.identify_tool)
+        #Remplir les champs du dialogue
 
