@@ -32,9 +32,10 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
 
 
 class DocumentLinkerDialog(QtGui.QDialog, FORM_CLASS):
-    def __init__(self, parent=None):
+    def __init__(self, parent):
         """Constructor."""
-        super(DocumentLinkerDialog, self).__init__(parent)
+        super(DocumentLinkerDialog, self).__init__(None)
+        self.parent = parent
         # Set up the user interface from Designer.
         # After setupUI you can access any designer object by doing
         # self.<objectname>, and you can use autoconnect slots - see
@@ -44,16 +45,27 @@ class DocumentLinkerDialog(QtGui.QDialog, FORM_CLASS):
 
     def dragEnterEvent(self, event):
         #Tester le mimetype du fichier draguer
-        event.acceptProposedAction()
+        if self.parent.canvas.currentLayer().isEditable():
+            event.acceptProposedAction()
         QgsMessageLog.logMessage("On est dans dragEnterEvent", 'DocLinker')
-        pass
 
     def dropEvent(self, event):
         QgsMessageLog.logMessage("On est dans dropEvent", 'DocLinker')
         if event.mimeData().hasUrls():
-            image_url = event.mimeData().urls()[0]
-            QgsMessageLog.logMessage("URL du fichier: {}".format(image_url), 'DocLinker')
-            myImage = QtGui.QPixmap()
-            myImage.load(image_url.path())
-            self.dropzoneLabel.setPixmap(myImage)
-        pass
+            self.image_url = event.mimeData().urls()[0]
+            QgsMessageLog.logMessage("URL du fichier: {}".format(self.image_url), 'DocLinker')
+            file_dialog = QtGui.QFileDialog(self)
+            file_dialog.setAcceptMode(QtGui.QFileDialog.AcceptSave)
+            file_dialog.setDirectory(os.path.expanduser('~'))
+            file_dialog.show()
+            file_dialog.fileSelected.connect(self.updateDialog)
+
+    def updateDialog(self, filename):
+        self.lineEdit_LINK_IMAGE.setText(filename)
+        myImage = QtGui.QPixmap()
+        myImage.load(self.image_url.path())
+        self.dropzoneLabel.setPixmap(myImage)
+        myImage.save(filename)
+
+    def updateFeatureFilename(self, feature):
+        feature.setAttribute('LINK_IMAGE', self.lineEdit_LINK_IMAGE.text())

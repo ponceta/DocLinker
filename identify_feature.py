@@ -14,8 +14,9 @@ class IdentifyFeature(QgsMapToolIdentify):
         super(QgsMapToolIdentify, self).__init__(canvas)
         self.canvas = canvas
         self.cursor = QCursor(Qt.CrossCursor)
-        self.dlg = DocumentLinkerDialog()
+        self.dlg = DocumentLinkerDialog(self)
         self.signal_select.connect(self.openDialog)
+        self.signal_select.connect(self.dlg.updateFeatureFilename)
 
     def activate(self):
         self.canvas.setCursor(self.cursor)

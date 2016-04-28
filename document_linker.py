@@ -60,7 +60,7 @@ class DocumentLinker:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference
-        self.dlg = DocumentLinkerDialog()
+        #self.dlg = DocumentLinkerDialog(self)
 
         # Declare instance attributes
         self.actions = []
@@ -191,7 +191,8 @@ class DocumentLinker:
     def run(self):
         """Run method that performs all the real work"""
         # show the dialog
-        # self.dlg.show()
+        # self.dlg.show
+        # ()
         # Run the dialog event loop
         # result = self.dlg.exec_()
         # See if OK was pressed
